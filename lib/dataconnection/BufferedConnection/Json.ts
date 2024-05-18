@@ -12,7 +12,13 @@ export class Json extends BufferedConnection {
 
 	// Handles a DataChannel message.
 	protected override _handleDataMessage({ data }: { data: Uint8Array }): void {
-		const deserializedData = this.parse(this.decoder.decode(data));
+		console.log(data, "sentData");
+		let deserializedData
+		if(typeof data === "string"){
+			deserializedData= JSON.parse(data)
+		}else{
+			deserializedData = this.parse(this.decoder.decode(data));
+		}
 
 		// PeerJS specific message
 		const peerData = deserializedData["__peerData"];
